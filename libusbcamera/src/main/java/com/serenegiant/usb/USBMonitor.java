@@ -466,6 +466,12 @@ public final class USBMonitor {
 	 * @return hasPermission
 	 */
 	private boolean updatePermission(final UsbDevice device, final boolean hasPermission) {
+		if(!hasPermission)
+		{
+			mUsbManager.requestPermission(device, mPermissionIntent);
+		}
+		else
+		{
 		final int deviceKey = getDeviceKey(device, true);
 		synchronized (mHasPermissions) {
 			if (hasPermission) {
@@ -475,6 +481,7 @@ public final class USBMonitor {
 			} else {
 				mHasPermissions.remove(deviceKey);
 			}
+		}
 		}
 		return hasPermission;
 	}
